@@ -1,4 +1,40 @@
 #Cord
 ###Connecting Backbone To jQuery || Zepto PubSub
 
-*docs coming soon...
+##Setting Subscriptions
+Is done like the Backbone events hash. A few examples:
+
+    var MyView = Backbone.View.extend({
+        subscriptions: {
+            'MyOtherView.deleted': 'sayGoodbye'
+        },
+        sayGoodbye: function(name) {
+            alert('So long' + name);
+        },
+        initialize: function() {
+            this.subscribe();
+        }
+    });
+
+The call to __this.subscribe()__ in the initialize method is needed here because, 
+unlike the __events__ hash there is no code in the core Backbone types (Model, View and Collection) 
+to set the subscriptions automagically. You can easily make custom classes to extend the Backbone types that 
+make the call to subscribe for you:
+
+    var Cord.View = Backbone.View.extend({
+        initialize: function() {
+            this.subscribe();
+        }
+    });
+
+Then just extend that class instead of the base Backbone type:
+
+    var MyView = Cord.View.extend({
+        subscriptions: {
+            'MyOtherView.deleted': 'sayGoodbye'
+        },
+        sayGoodbye: function(name) {
+            alert('So long' + name);
+        }
+    });
+
