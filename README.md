@@ -38,3 +38,24 @@ Then just extend that class instead of the base Backbone type:
         }
     });
 
+You can, of course, declare the subscriptions hash when instantiating a class:
+
+    var Model = new Backbone.Model({
+        name: 'Jeffrey',
+        subscriptions: {
+            'async.data.arrival': 'set'
+        }
+    });
+
+Another useful pattern is just to set the subscription in the class definition's __initialize()__ method:
+
+    var Collection = Backbone.Collection.extend({
+        initialize: function() {
+            this.subscribe({
+                'a.new.model': 'add'
+            })
+        }
+    });
+
+##Publishing
+...coming soon
